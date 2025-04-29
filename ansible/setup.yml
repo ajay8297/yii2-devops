@@ -1,0 +1,70 @@
+---
+- name: Set up EC2 instance for Yii2 app
+  hosts: all
+  become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install required packages
+      apt:
+        name:
+          - docker.io
+          - nginx
+          - git
+          - curl
+        state: present
+
+    - name: Start and enable Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Install Docker Compose
+      get_url:
+        url: https://github.com/docker/compose/releases/download/v2.20.0/docker-compose-linux-x86_64
+        dest: /usr/local/bin/docker-compose
+        mode: '0755'
+
+    - name: Initialize Docker Swarm
+      command: docker swarm init
+      ignore_errors: yes
+
+    - name: Create NGINX config directory
+      file:
+        path: /etc/nginx/sites-available
+        state: directory
+
+    - name: Copy NGINX config
+      copy:
+        src: nginx.conf
+        dest: /etc/nginx/sites-available/yii2.conf
+        mode: '0644'
+
+    - name: Enable NGINX config
+      file:
+        src: /etc/nginx/sites-available/yii2.conf
+        dest: /etc/nginx/sites-enabled/yii2.conf
+        state: link
+
+    - name: Start and enable NGINX
+      service:
+        name: nginx
+        state: restarted
+        enabled: yes
+
+    - name: Ensure app directory exists
+      file:
+        path: /opt/yii2-app
+        state: directory
+        mode: '0755'
+
+    - name: Copy docker-compose.yml
+      copy:
+        src: docker-compose.yml
+        dest: /opt/yii2-app/docker-compose.yml
+        mode: '0644'
