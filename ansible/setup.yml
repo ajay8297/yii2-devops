@@ -34,7 +34,7 @@
         mode: '0755'
 
     - name: Check if Docker Swarm is initialized
-      command: docker info --format '{{.Swarm.LocalNodeState}}'
+      command: docker info --format '{% raw %}{{.Swarm.LocalNodeState}}{% endraw %}'
       register: swarm_state
       changed_when: false
 
