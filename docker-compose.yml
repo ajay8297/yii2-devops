@@ -1,8 +1,7 @@
 version: '3.8'
-
 services:
   app:
-    image: ${REGISTRY}/${REPOSITORY}:${TAG:-latest}
+    image: ${REGISTRY}${REPOSITORY}:${TAG:-latest}
     deploy:
       replicas: 2
       restart_policy:
@@ -17,6 +16,5 @@ services:
       start_period: 5s
     volumes:
       - app-data:/app
-
 volumes:
   app-data:
