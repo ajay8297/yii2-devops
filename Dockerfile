@@ -6,18 +6,16 @@ RUN apt-get update && apt-get install -y \
     unzip \
     nodejs \
     npm \
+    curl \
     && docker-php-ext-install pdo pdo_mysql
 
 # Install Composer 2.7.7
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=2.7.7
 
-# Install php-fpm-healthcheck
-RUN curl -sS https://raw.githubusercontent.com/renatomefi/php-fpm-healthcheck/master/php-fpm-healthcheck \
-    -o /usr/local/bin/php-fpm-healthcheck \
-    && chmod +x /usr/local/bin/php-fpm-healthcheck
-
-# Configure PHP-FPM status endpoint
-RUN echo "pm.status_path = /status" >> /usr/local/etc/php-fpm.d/zz-docker.conf
+# Configure PHP-FPM status and ping endpoints
+RUN echo "pm.status_path = /status" >> /usr/local/etc/php-fpm.d/zz-docker.conf \
+    && echo "ping.path = /ping" >> /usr/local/etc/php-fpm.d/zz-docker.conf \
+    && echo "ping.response = pong" >> /usr/local/etc/php-fpm.d/zz-docker.conf
 
 # Set working directory
 WORKDIR /app
