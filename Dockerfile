@@ -11,6 +11,11 @@ RUN apt-get update && apt-get install -y \
 # Install Composer 2.7.7
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=2.7.7
 
+# Install php-fpm-healthcheck
+RUN curl -sS https://raw.githubusercontent.com/renatomefi/php-fpm-healthcheck/master/php-fpm-healthcheck \
+    -o /usr/local/bin/php-fpm-healthcheck \
+    && chmod +x /usr/local/bin/php-fpm-healthcheck
+
 # Set working directory
 WORKDIR /app
 
