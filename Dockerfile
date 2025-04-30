@@ -16,6 +16,9 @@ RUN curl -sS https://raw.githubusercontent.com/renatomefi/php-fpm-healthcheck/ma
     -o /usr/local/bin/php-fpm-healthcheck \
     && chmod +x /usr/local/bin/php-fpm-healthcheck
 
+# Configure PHP-FPM status endpoint
+RUN echo "pm.status_path = /status" >> /usr/local/etc/php-fpm.d/zz-docker.conf
+
 # Set working directory
 WORKDIR /app
 
