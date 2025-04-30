@@ -3,7 +3,7 @@ services:
   app:
     image: ${REGISTRY}${REPOSITORY}:${TAG:-latest}
     deploy:
-      replicas: 1  # Reduced to 1 to avoid port conflict
+      replicas: 1
       restart_policy:
         condition: on-failure
     ports:
@@ -17,4 +17,4 @@ services:
     volumes:
       - app-data:/app
 volumes:
-  app-data
+  app-data: {}
