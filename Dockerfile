@@ -4,6 +4,8 @@ FROM php:7.4-fpm
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     unzip \
+    nodejs \
+    npm \
     && docker-php-ext-install pdo pdo_mysql
 
 # Install Composer
@@ -14,6 +16,10 @@ WORKDIR /app
 
 # Copy application files
 COPY . /app
+
+# Explicitly allow Composer plugins
+RUN composer config --no-plugins allow-plugins.yiisoft/yii2-composer true
+RUN composer config --no-plugins allow-plugins.foxy/foxy true
 
 # Install Yii2 dependencies
 RUN composer install --no-interaction --optimize-autoloader

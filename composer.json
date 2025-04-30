@@ -20,7 +20,8 @@
       "enabled": true
     },
     "allow-plugins": {
-      "yiisoft/yii2-composer": true
+      "yiisoft/yii2-composer": true,
+      "foxy/foxy": true
     }
   },
   "minimum-stability": "stable"
