@@ -1,21 +1,27 @@
 {
-    "name": "yiisoft/yii2-app-basic",
-    "description": "Yii 2 Basic Project Template",
-    "type": "project",
-    "require": {
-        "php": ">=7.4.0",
-        "yiisoft/yii2": "~2.0.45",
-        "yiisoft/yii2-bootstrap5": "~2.0.2"
-    },
-    "autoload": {
-        "psr-4": {
-            "app\\": ""
-        }
-    },
-    "config": {
-        "process-timeout": 1800,
-        "fxp-asset": {
-            "enabled": false
-        }
+  "name": "ajay829/yii2-app",
+  "description": "Yii2 App for DevOps Assessment",
+  "type": "project",
+  "require": {
+    "php": ">=7.4",
+    "yiisoft/yii2": "~2.0.45",
+    "yidas/yii2-jquery": "^3.0",
+    "foxy/foxy": "^1.0"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
     }
+  ],
+  "config": {
+    "process-timeout": 1800,
+    "fxp-asset": {
+      "enabled": true
+    },
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true
+    }
+  },
+  "minimum-stability": "stable"
 }

@@ -1,6 +1,6 @@
 FROM php:7.4-fpm
 
-# Install dependencies
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     unzip \
@@ -11,6 +11,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Set working directory
 WORKDIR /app
+
+# Copy application files
 COPY . /app
 
 # Install Yii2 dependencies
@@ -22,8 +24,5 @@ RUN chown -R www-data:www-data /app
 # Expose port
 EXPOSE 9000
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:9000 || exit 1
-
+# Start PHP-FPM
 CMD ["php-fpm"]
